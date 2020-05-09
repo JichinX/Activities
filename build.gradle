@@ -14,7 +14,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url PUBLIC_GROUP }
+        maven { url "https://mirrors.huaweicloud.com/repository/maven/" }
         maven { url "https://jitpack.io" }
         google()
         jcenter()
