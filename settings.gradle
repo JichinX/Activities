@@ -1,0 +1,3 @@
+include ':activities'
+include ':app'
+rootProject.name = "Activities"

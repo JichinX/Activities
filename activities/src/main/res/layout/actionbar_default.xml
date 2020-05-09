@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/default_actionbar_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF0000"
+    tools:layout_height="@dimen/dp_56">
+    <!--右侧图片-->
+    <ImageView
+        android:id="@+id/default_actionbar_rt_image"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:src="@drawable/ic_arrow_forward" />
+    <!--左侧-->
+    <ImageView
+        android:id="@+id/default_actionbar_lf_image"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:src="@drawable/ic_arrow_back" />
+    <!--右侧文字-->
+    <TextView
+        android:id="@+id/default_actionbar_rt_text"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toRightOf="@id/default_actionbar_lf_image"
+        tools:text="返回" />
+    <!--左侧文字-->
+    <TextView
+        android:id="@+id/default_actionbar_lf_text"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toLeftOf="@id/default_actionbar_rt_image"
+        tools:text="确定" />
+    <!--Title-->
+    <TextView
+        android:id="@+id/default_actionbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="首页" />
+</androidx.constraintlayout.widget.ConstraintLayout>
