@@ -1,6 +1,5 @@
 package me.xujichang.lib.activities.actionbars;
 
-import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.viewbinding.ViewBinding;

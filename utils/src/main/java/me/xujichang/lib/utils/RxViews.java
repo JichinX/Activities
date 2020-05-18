@@ -1,11 +1,10 @@
-package me.xujichang.lib.activities.util;
+package me.xujichang.lib.utils;
 
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
-import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.common.collect.Maps;

@@ -11,7 +11,7 @@ import androidx.viewbinding.ViewBinding;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import me.xujichang.lib.activities.util.ClassUtils;
+import me.xujichang.lib.utils.ClassUtils;
 
 /**
  * me.xujichang.lib.activities in Activities

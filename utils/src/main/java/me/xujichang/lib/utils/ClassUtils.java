@@ -1,4 +1,4 @@
-package me.xujichang.lib.activities.util;
+package me.xujichang.lib.utils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

@@ -29,12 +29,12 @@ import java.util.concurrent.ConcurrentMap;
 
 import me.xujichang.lib.activities.databinding.RootContentBinding;
 import me.xujichang.lib.activities.util.ActivityUtils;
-import me.xujichang.lib.activities.util.RxViews;
 import me.xujichang.lib.activities.util.ToastDelegate;
 import me.xujichang.lib.permissions.IPermissionRequest;
 import me.xujichang.lib.permissions.LivePermissions;
 import me.xujichang.lib.permissions.PermissionResult;
 import me.xujichang.lib.permissions.PermissionResultObserverConvert;
+import me.xujichang.lib.utils.RxViews;
 
 /**
  * me.xujichang.lib.activities in Activities
