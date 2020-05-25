@@ -3,7 +3,10 @@ package me.xujichang.lib.activities;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntegerRes;
+import androidx.annotation.StringRes;
 
 import me.xujichang.lib.activities.actionbars.DefaultActionBar;
 import me.xujichang.lib.activities.actionbars.IActionBar;
@@ -57,6 +60,13 @@ public abstract class AbstractActionBarActivity extends AbstractBasicActivity im
     }
 
     /**
+     * 设置Title
+     */
+    public void setActionBarTitle(@StringRes int res) {
+        getActionBarDelegate().setActionBarTitle(getString(res));
+    }
+
+    /**
      * 设置Title Size
      *
      * @param size
@@ -77,6 +87,13 @@ public abstract class AbstractActionBarActivity extends AbstractBasicActivity im
     }
 
     /**
+     * 设置左侧图标
+     */
+    public void setActionBarLeftIcon(@DrawableRes int res) {
+        getActionBarDelegate().setActionBarLeftIcon(getDrawable(res));
+    }
+
+    /**
      * 设置右侧图标
      *
      * @param pDrawable
@@ -84,6 +101,10 @@ public abstract class AbstractActionBarActivity extends AbstractBasicActivity im
     @Override
     public void setActionBarRightIcon(Drawable pDrawable) {
         getActionBarDelegate().setActionBarRightIcon(pDrawable);
+    }
+
+    public void setActionBarRightIcon(@DrawableRes int pDrawable) {
+        getActionBarDelegate().setActionBarRightIcon(getDrawable(pDrawable));
     }
 
     /**
@@ -96,6 +117,10 @@ public abstract class AbstractActionBarActivity extends AbstractBasicActivity im
         getActionBarDelegate().setActionBarRightText(pText);
     }
 
+    public void setActionBarRightText(@StringRes int pText) {
+        getActionBarDelegate().setActionBarRightText(getString(pText));
+    }
+
     /**
      * 设置左侧文字
      *
@@ -104,6 +129,10 @@ public abstract class AbstractActionBarActivity extends AbstractBasicActivity im
     @Override
     public void setActionBarLeftText(String pText) {
         getActionBarDelegate().setActionBarLeftText(pText);
+    }
+
+    public void setActionBarLeftText(@StringRes int pText) {
+        getActionBarDelegate().setActionBarLeftText(getString(pText));
     }
 
     public void showBack() {

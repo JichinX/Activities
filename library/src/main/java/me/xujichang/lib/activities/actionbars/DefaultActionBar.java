@@ -38,8 +38,9 @@ public class DefaultActionBar extends AbstractActionBar<ActionbarDefaultBinding>
 
     @Override
     public void setActionBarTitle(String title) {
-        checkAndSetVisible(mBinding.defaultActionbarTitle);
-        mBinding.defaultActionbarTitle.setText(checkNull(title));
+        if (checkAndSetVisible(mBinding.defaultActionbarTitle, checkIsNull(title))) {
+            mBinding.defaultActionbarTitle.setText(checkNull(title));
+        }
     }
 
     @Override
@@ -49,34 +50,60 @@ public class DefaultActionBar extends AbstractActionBar<ActionbarDefaultBinding>
 
     @Override
     public void setActionBarLeftIcon(Drawable pDrawable) {
-        checkAndSetVisible(mBinding.defaultActionbarLfImage);
-        mBinding.defaultActionbarLfImage.setImageDrawable(pDrawable);
+        if (checkAndSetVisible(mBinding.defaultActionbarLfImage, checkIsNull(pDrawable))) {
+            mBinding.defaultActionbarLfImage.setImageDrawable(pDrawable);
+        }
     }
+
 
     @Override
     public void setActionBarRightIcon(Drawable pDrawable) {
-        checkAndSetVisible(mBinding.defaultActionbarRtImage);
-        mBinding.defaultActionbarRtImage.setImageDrawable(pDrawable);
+        if (checkAndSetVisible(mBinding.defaultActionbarRtImage, checkIsNull(pDrawable))) {
+            mBinding.defaultActionbarRtImage.setImageDrawable(pDrawable);
+        }
     }
 
     @Override
     public void setActionBarRightText(String pText) {
-        checkAndSetVisible(mBinding.defaultActionbarRtText);
-        mBinding.defaultActionbarRtText.setText(checkNull(pText));
+        if (checkAndSetVisible(mBinding.defaultActionbarRtText, checkIsNull(pText))) {
+            mBinding.defaultActionbarRtText.setText(checkNull(pText));
+        }
     }
 
     @Override
     public void setActionBarLeftText(String pText) {
-        checkAndSetVisible(mBinding.defaultActionbarLfText);
-        mBinding.defaultActionbarLfText.setText(checkNull(pText));
+        if (checkAndSetVisible(mBinding.defaultActionbarLfText, checkIsNull(pText))) {
+            mBinding.defaultActionbarLfText.setText(checkNull(pText));
+        }
     }
-
 
     private String checkNull(String pTitle) {
         return Strings.nullToEmpty(pTitle);
     }
 
-    private void checkAndSetVisible(View pView) {
+    private boolean checkIsNull(Object pDrawable) {
+        return null == pDrawable;
+    }
+
+    private boolean checkAndSetVisible(View pView, boolean valueIsNull) {
+        if (valueIsNull) {
+            //value is null，hide the view
+            hideView(pView);
+            return false;
+        }
+        showView(pView);
+        return true;
+    }
+
+    private void hideView(View pView) {
+        if (pView.getVisibility() != View.GONE) {
+            mConstraintSet.setVisibility(pView.getId(), ConstraintSet.GONE);
+            TransitionManager.beginDelayedTransition(mBinding.getRoot());
+            mConstraintSet.applyTo(mBinding.getRoot());
+        }
+    }
+
+    private void showView(View pView) {
         if (pView.getVisibility() != View.VISIBLE) {
             mConstraintSet.setVisibility(pView.getId(), ConstraintSet.VISIBLE);
             TransitionManager.beginDelayedTransition(mBinding.getRoot());
