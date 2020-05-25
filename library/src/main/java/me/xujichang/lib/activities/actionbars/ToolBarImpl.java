@@ -91,7 +91,7 @@ public class ToolBarImpl extends AbstractActionBar<ActionbarToolbarBinding> {
 
     }
 
-    public static class ToolBarClick implements IActionBarClick {
+    public static abstract class ToolBarClick implements IActionBarClick {
 
     }
 }

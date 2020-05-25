@@ -92,7 +92,7 @@ public class LoadingActionBar extends AbstractActionBar<ActionbarLoadingBinding>
 
     }
 
-    public static class LoadingActionBarClick implements IActionBarClick {
+    public static abstract class LoadingActionBarClick implements IActionBarClick {
 
     }
 }

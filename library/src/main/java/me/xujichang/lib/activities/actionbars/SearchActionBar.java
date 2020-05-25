@@ -97,7 +97,7 @@ public class SearchActionBar extends AbstractActionBar<ActionbarSearchBinding> {
     /**
      * 事件点击
      */
-    public static class SearchActionBarClick implements IActionBarClick {
+    public static abstract class SearchActionBarClick implements IActionBarClick {
 
     }
 }
