@@ -7,9 +7,11 @@ import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntegerRes;
 import androidx.annotation.StringRes;
+import androidx.lifecycle.LifecycleOwner;
 
 import me.xujichang.lib.activities.actionbars.DefaultActionBar;
 import me.xujichang.lib.activities.actionbars.IActionBar;
+import me.xujichang.lib.activities.actionbars.IActionBarClick;
 
 /**
  * me.xujichang.lib.activities in Activities
@@ -19,7 +21,7 @@ import me.xujichang.lib.activities.actionbars.IActionBar;
  *
  * @author xujichang at 2020/5/7 4:01 PM
  */
-public abstract class AbstractActionBarActivity extends AbstractBasicActivity implements IActionBar {
+public abstract class AbstractActionBarActivity extends AbstractBasicActivity implements IActionBar, IActionBarClick {
     private IActionBar mActionBarDelegate;
 
     @Override
@@ -38,7 +40,7 @@ public abstract class AbstractActionBarActivity extends AbstractBasicActivity im
         if (null == mActionBarDelegate) {
             mActionBarDelegate = onCreateActionBar();
             if (null == mActionBarDelegate) {
-                mActionBarDelegate = new DefaultActionBar();
+                mActionBarDelegate = new DefaultActionBar(this);
             }
         }
         return mActionBarDelegate;
@@ -145,5 +147,25 @@ public abstract class AbstractActionBarActivity extends AbstractBasicActivity im
 
     public void showBack(@DrawableRes int pRes) {
         showBack(getResources().getDrawable(pRes));
+    }
+
+    @Override
+    public void onLeftClick() {
+
+    }
+
+    @Override
+    public void onRightClick() {
+
+    }
+
+    @Override
+    public void onTitleClick() {
+
+    }
+
+    @Override
+    public LifecycleOwner getLifecycleOwner() {
+        return this;
     }
 }

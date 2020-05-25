@@ -2,6 +2,8 @@ package me.xujichang.lib.activities.actionbars;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.transition.TransitionManager;
@@ -23,8 +25,11 @@ public class DefaultActionBar extends AbstractActionBar<ActionbarDefaultBinding>
 
     private ConstraintSet mConstraintSet = new ConstraintSet();
 
-    private DefaultActionBarClick mActionBaClick;
-    private DefaultActionBarInit mActionBarInit;
+    private IActionBarClick mBarClick;
+
+    public DefaultActionBar(IActionBarClick pBarClick) {
+        mBarClick = pBarClick;
+    }
 
     @Override
     public int getActionBarLayoutRes() {
@@ -34,6 +39,11 @@ public class DefaultActionBar extends AbstractActionBar<ActionbarDefaultBinding>
     @Override
     protected void onActionBarInit(ActionbarDefaultBinding pBinding) {
         mConstraintSet.clone(mBinding.getRoot());
+        if (null != mBarClick) {
+            attachRightClick(mBarClick, pBinding.defaultActionbarRtImage, pBinding.defaultActionbarRtText);
+            attachLeftClick(mBarClick, pBinding.defaultActionbarRtImage, pBinding.defaultActionbarRtText);
+            attachTitleClick(mBarClick, pBinding.defaultActionbarRtImage, pBinding.defaultActionbarRtText);
+        }
     }
 
     @Override
@@ -111,11 +121,4 @@ public class DefaultActionBar extends AbstractActionBar<ActionbarDefaultBinding>
         }
     }
 
-    public static class DefaultActionBarInit implements IActionBarInit {
-
-    }
-
-    public static class DefaultActionBarClick implements IActionBarClick {
-
-    }
 }

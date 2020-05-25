@@ -1,13 +1,17 @@
 package me.xujichang.lib.activities.actionbars;
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.viewbinding.ViewBinding;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import me.xujichang.lib.common.util.ClassUtils;
+import me.xujichang.lib.common.util.RxViews;
 
 
 /**
@@ -40,4 +44,34 @@ public abstract class AbstractActionBar<AVB extends ViewBinding> implements IAct
     }
 
     protected abstract void onActionBarInit(AVB pBinding);
+
+
+    protected void attachTitleClick(final IActionBarClick pClick, View... pViews) {
+        if (null != pViews) {
+            for (View vView : pViews) {
+                click(pClick.getLifecycleOwner(), vView, v -> pClick.onTitleClick());
+            }
+        }
+    }
+
+    protected void attachLeftClick(final IActionBarClick pClick, View... pViews) {
+        if (null != pViews) {
+            for (View vView : pViews) {
+                click(pClick.getLifecycleOwner(), vView, v -> pClick.onLeftClick());
+            }
+        }
+    }
+
+    protected void attachRightClick(IActionBarClick pClick, View... pViews) {
+        if (null != pViews) {
+            for (View vView : pViews) {
+                click(pClick.getLifecycleOwner(), vView, v -> pClick.onRightClick());
+            }
+        }
+    }
+
+    //--------------------------------点击事件--------------------------
+    public void click(LifecycleOwner pOwner, View pView, View.OnClickListener pListener) {
+        RxViews.getInstance(pOwner).click(pView, pListener);
+    }
 }
