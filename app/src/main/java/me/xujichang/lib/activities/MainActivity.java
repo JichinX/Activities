@@ -25,6 +25,12 @@ public class MainActivity extends BaseVMActivity<MainViewModel, ActivityMainBind
     private AtomicBoolean mAtomicBoolean = new AtomicBoolean(false);
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        enableCustomActionBar();
+    }
+
+    @Override
     protected void onViewModelInit(MainViewModel pViewModel) {
 
     }
@@ -45,8 +51,8 @@ public class MainActivity extends BaseVMActivity<MainViewModel, ActivityMainBind
                 mAtomicBoolean.set(!show);
             }
         });
-        setStatusBarColorRes(R.color.design_default_color_primary_dark);
-        setActionBarColorRes(R.color.design_default_color_primary);
+        setActionBarLeftText("左侧文字测试");
+        setActionBarRightText("右侧文字测试");
         setActionBarTitle("首页测试");
         showBack();
     }
@@ -54,5 +60,23 @@ public class MainActivity extends BaseVMActivity<MainViewModel, ActivityMainBind
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onRightClick() {
+        super.onRightClick();
+        Log.i(TAG, "onRightClick: ");
+    }
+
+    @Override
+    public void onLeftClick() {
+        super.onLeftClick();
+        Log.i(TAG, "onLeftClick: ");
+    }
+
+    @Override
+    public void onTitleClick() {
+        super.onTitleClick();
+        Log.i(TAG, "onTitleClick: ");
     }
 }

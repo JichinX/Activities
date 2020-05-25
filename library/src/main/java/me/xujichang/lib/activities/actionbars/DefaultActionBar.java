@@ -41,8 +41,8 @@ public class DefaultActionBar extends AbstractActionBar<ActionbarDefaultBinding>
         mConstraintSet.clone(mBinding.getRoot());
         if (null != mBarClick) {
             attachRightClick(mBarClick, pBinding.defaultActionbarRtImage, pBinding.defaultActionbarRtText);
-            attachLeftClick(mBarClick, pBinding.defaultActionbarRtImage, pBinding.defaultActionbarRtText);
-            attachTitleClick(mBarClick, pBinding.defaultActionbarRtImage, pBinding.defaultActionbarRtText);
+            attachLeftClick(mBarClick, pBinding.defaultActionbarLfImage, pBinding.defaultActionbarLfText);
+            attachTitleClick(mBarClick, pBinding.defaultActionbarTitle);
         }
     }
 
