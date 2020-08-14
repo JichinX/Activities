@@ -18,7 +18,7 @@ public abstract class ToastDelegate {
     public abstract void show(String pMessage);
 
     private static class DefaultToast extends ToastDelegate {
-        private Context mContext;
+        private final Context mContext;
 
         public DefaultToast(Context pContext) {
             mContext = pContext;

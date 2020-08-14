@@ -23,9 +23,9 @@ import me.xujichang.lib.activities.databinding.ActionbarDefaultBinding;
  */
 public class DefaultActionBar extends AbstractActionBar<ActionbarDefaultBinding> {
 
-    private ConstraintSet mConstraintSet = new ConstraintSet();
+    private final ConstraintSet mConstraintSet = new ConstraintSet();
 
-    private IActionBarClick mBarClick;
+    private final IActionBarClick mBarClick;
 
     public DefaultActionBar(IActionBarClick pBarClick) {
         mBarClick = pBarClick;

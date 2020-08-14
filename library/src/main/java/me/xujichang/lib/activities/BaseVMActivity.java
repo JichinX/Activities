@@ -11,6 +11,9 @@ import androidx.viewbinding.ViewBinding;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import me.xujichang.lib.activities.base.AbstractActionBarActivity;
+import me.xujichang.lib.activities.base.IViewBinding;
+import me.xujichang.lib.activities.base.IViewModel;
 import me.xujichang.lib.common.util.ClassUtils;
 
 
@@ -19,10 +22,15 @@ import me.xujichang.lib.common.util.ClassUtils;
  * description:
  * 处理Activity中ViewModel+ViewBinding
  * <p>
+ * 处理ViewModel和ViewBinding
  *
+ * @param <VM> ViewModel
+ * @param <VB> ViewBinding
  * @author xujichang at 2020/5/7 4:02 PM
  */
-public abstract class BaseVMActivity<VM extends ViewModel, VB extends ViewBinding> extends AbstractActionBarActivity {
+public abstract class BaseVMActivity<VM extends ViewModel, VB extends ViewBinding>
+        extends AbstractActionBarActivity
+        implements IViewBinding<VB>, IViewModel<VM> {
     protected VM mViewModel;
     protected VB mViewBinding;
 
@@ -48,18 +56,4 @@ public abstract class BaseVMActivity<VM extends ViewModel, VB extends ViewBindin
             onViewModelInit(mViewModel);
         }
     }
-
-    /**
-     * ViewModel 初始化完成
-     *
-     * @param pViewModel
-     */
-    protected abstract void onViewModelInit(VM pViewModel);
-
-    /**
-     * ViewBinding 初始化完成
-     *
-     * @param pViewBinding
-     */
-    protected abstract void onBindingInit(VB pViewBinding);
 }

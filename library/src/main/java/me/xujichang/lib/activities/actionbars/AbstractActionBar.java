@@ -10,8 +10,8 @@ import androidx.viewbinding.ViewBinding;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import me.xujichang.lib.common.rx.RxViews;
 import me.xujichang.lib.common.util.ClassUtils;
-import me.xujichang.lib.common.util.RxViews;
 
 
 /**

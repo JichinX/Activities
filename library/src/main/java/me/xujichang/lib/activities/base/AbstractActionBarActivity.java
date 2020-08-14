@@ -1,14 +1,12 @@
-package me.xujichang.lib.activities;
+package me.xujichang.lib.activities.base;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
-import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
-import androidx.annotation.IntegerRes;
 import androidx.annotation.StringRes;
-import androidx.lifecycle.LifecycleOwner;
 
+import me.xujichang.lib.activities.R;
 import me.xujichang.lib.activities.actionbars.DefaultActionBar;
 import me.xujichang.lib.activities.actionbars.IActionBar;
 import me.xujichang.lib.activities.actionbars.IActionBarClick;
@@ -46,6 +44,12 @@ public abstract class AbstractActionBarActivity extends AbstractBasicActivity im
         return mActionBarDelegate;
     }
 
+    /**
+     * 创建ActionBar
+     * 如果你想实现自己的ActionBar，需要重新实现此方法
+     *
+     * @return
+     */
     protected IActionBar onCreateActionBar() {
         return null;
     }
@@ -151,21 +155,20 @@ public abstract class AbstractActionBarActivity extends AbstractBasicActivity im
 
     @Override
     public void onLeftClick() {
-
+        dispatchActionbarClick();
     }
 
     @Override
     public void onRightClick() {
-
+        dispatchActionbarClick();
     }
 
     @Override
     public void onTitleClick() {
-
+        dispatchActionbarClick();
     }
 
-    @Override
-    public LifecycleOwner getLifecycleOwner() {
-        return this;
+    private void dispatchActionbarClick() {
+
     }
 }

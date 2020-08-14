@@ -1,4 +1,4 @@
-package me.xujichang.lib.activities;
+package me.xujichang.lib.activities.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -18,8 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.paging.CombinedLoadStates;
+import androidx.paging.PagingData;
+import androidx.paging.PagingDataAdapter;
 import androidx.transition.TransitionManager;
 
 import com.google.common.collect.Maps;
@@ -27,10 +33,13 @@ import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 import me.xujichang.lib.activities.databinding.RootContentBinding;
 import me.xujichang.lib.activities.util.ActivityUtils;
 import me.xujichang.lib.activities.util.ToastDelegate;
-import me.xujichang.lib.common.util.RxViews;
+import me.xujichang.lib.common.rx.RxViews;
+import me.xujichang.lib.common.status.ListStatus;
 import me.xujichang.lib.permissions.IPermissionRequest;
 import me.xujichang.lib.permissions.LivePermissions;
 import me.xujichang.lib.permissions.PermissionResult;
@@ -48,7 +57,7 @@ import me.xujichang.lib.permissions.PermissionResultObserverConvert;
  * <p>
  * created by xujichang at 2020/4/28 5:22 PM
  */
-public abstract class AbstractBasicActivity extends AppCompatActivity {
+public abstract class AbstractBasicActivity extends AppCompatActivity implements IPaging3 {
     private long[] mHits = new long[2];
     public final String TAG = this.getClass().getSimpleName();
     protected ConstraintSet mConstraintSet = new ConstraintSet();
@@ -76,24 +85,20 @@ public abstract class AbstractBasicActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 初始化ActionBarStub
+     *
+     * @param pView
+     */
     protected abstract void onActionBarInit(View pView);
 
+    @LayoutRes
     protected abstract int getActionBarLayoutRes();
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         removeActivity();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(newBase);
-    }
-
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
     }
 
     @Override
@@ -119,27 +124,6 @@ public abstract class AbstractBasicActivity extends AppCompatActivity {
     protected void onRootViewInit(RootContentBinding pBinding, View pView) {
 
     }
-
-    @Override
-    public void addContentView(View view, ViewGroup.LayoutParams params) {
-        super.addContentView(view, params);
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        return super.onSupportNavigateUp();
-    }
-
-    @Override
-    public void onContentChanged() {
-        super.onContentChanged();
-    }
-
 
     //=====================Activity 栈===========================
     private ConcurrentMap<String, AppCompatActivity> mActivities;
@@ -169,7 +153,7 @@ public abstract class AbstractBasicActivity extends AppCompatActivity {
         return this;
     }
 
-    public LifecycleOwner getOwner() {
+    public LifecycleOwner getLifecycleOwner() {
         return this;
     }
     //=====================Context===========================
@@ -187,7 +171,6 @@ public abstract class AbstractBasicActivity extends AppCompatActivity {
     }
 
     //=====================权限申请===========================
-
     @Override
     public void onBackPressed() {
         if (isTaskRoot()) {
@@ -211,12 +194,13 @@ public abstract class AbstractBasicActivity extends AppCompatActivity {
         }
     }
 
+    //======================Toast
     public void toast(String message) {
         getToast().show(message);
     }
 
     public ToastDelegate getToast() {
-        return ToastDelegate.useDefault(getContext());
+        return ToastDelegate.useDefault(getApplicationContext());
     }
     //====================软键盘----------------------------
 
@@ -347,4 +331,45 @@ public abstract class AbstractBasicActivity extends AppCompatActivity {
     protected void setActionBarColor(@ColorInt int pColor) {
         mContentBinding.bgActionBar.setBackgroundColor(pColor);
     }
+
+    //====================Paging3========================
+    @Override
+    public <T> void bindPagingData(PagingDataAdapter<T, ?> pAdapter, LiveData<PagingData<T>> pListing) {
+        pAdapter.addLoadStateListener(new Function1<CombinedLoadStates, Unit>() {
+            @Override
+            public Unit invoke(CombinedLoadStates pLoadStates) {
+                attachPagingStatus(pLoadStates);
+                return null;
+            }
+        });
+        pListing.observe(getLifecycleOwner(), new PagingObserver<>(pAdapter, getLifecycle()));
+    }
+
+    private void attachPagingStatus(CombinedLoadStates pLoadStates) {
+        onAppend(pLoadStates.getAppend());
+        onPrepend(pLoadStates.getPrepend());
+        onRefresh(pLoadStates.getRefresh());
+    }
+
+    @Override
+    public void attachListStatus(LiveData<ListStatus> pStatus) {
+        Log.d(TAG, "attachListStatus() called with: pStatus = [" + pStatus + "]");
+    }
+
+    private static class PagingObserver<T> implements Observer<PagingData<T>> {
+        private final PagingDataAdapter<T, ?> mAdapter;
+        private final Lifecycle mLifecycle;
+
+        public PagingObserver(PagingDataAdapter<T, ?> pAdapter, Lifecycle pLifecycle) {
+            mAdapter = pAdapter;
+            mLifecycle = pLifecycle;
+        }
+
+        @Override
+        public void onChanged(PagingData<T> pTPagingData) {
+            mAdapter.submitData(mLifecycle, pTPagingData);
+        }
+    }
+    //==================RequestStatus=====================
+
 }
