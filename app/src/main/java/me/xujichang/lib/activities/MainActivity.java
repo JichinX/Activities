@@ -5,14 +5,12 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.paging.LoadState;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import me.xujichang.lib.activities.actionbars.IActionBar;
-import me.xujichang.lib.activities.actionbars.SearchActionBar;
 import me.xujichang.lib.activities.databinding.ActivityMainBinding;
-import me.xujichang.lib.activities.databinding.RootContentBinding;
 
 /**
  * me.xujichang.lib.activities in Activities
@@ -31,12 +29,12 @@ public class MainActivity extends BaseVMActivity<MainViewModel, ActivityMainBind
     }
 
     @Override
-    protected void onViewModelInit(MainViewModel pViewModel) {
+    public void onViewModelInit(MainViewModel pViewModel) {
 
     }
 
     @Override
-    protected void onBindingInit(ActivityMainBinding pViewBinding) {
+    public void onBindingInit(ActivityMainBinding pViewBinding) {
         click(pViewBinding.tvGreeting, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,5 +76,20 @@ public class MainActivity extends BaseVMActivity<MainViewModel, ActivityMainBind
     public void onTitleClick() {
         super.onTitleClick();
         Log.i(TAG, "onTitleClick: ");
+    }
+
+    @Override
+    public void onAppend(LoadState pLoadState) {
+
+    }
+
+    @Override
+    public void onPrepend(LoadState pLoadState) {
+
+    }
+
+    @Override
+    public void onRefresh(LoadState pLoadState) {
+
     }
 }
